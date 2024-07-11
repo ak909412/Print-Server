@@ -34,8 +34,8 @@ This project aims to develop a versatile print server system that can use either
    sudo apt update
    sudo apt install cups
    sudo usermod -aG lpadmin pi
-## Add Printer to CUPS: Access CUPS via https://<Raspberry Pi IP>:631 and add your printer.
-## Python Script for Monitoring S3 Bucket:
+**Add Printer to CUPS: Access CUPS via https://<Raspberry Pi IP>:631 and add your printer.**
+**Python Script for Monitoring S3 Bucket:**
 Install required libraries:
 sh
 Copy code
