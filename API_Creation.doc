@@ -1,0 +1,220 @@
+# Creating an an API to put file in the S3 Bucket
+## Create an IAM role for API Gateway 1. Open the IAM console.
+
+2. In the navigation pane, choose Roles.
+
+3. Choose Create role.
+
+4. In the Select type of trusted entity section, choose AWS service.
+
+5. In the Choose a use case section, choose API Gateway.
+
+6. In the Select your use case section, choose API Gateway.
+
+7. Choose Next: Permissions
+
+8. (Optional) Choose Next: Tags to add tags.
+
+9. Choose Next: Review.
+
+10. For Role name, enter a name for your policy. For example: api-gateway-upload-to-s3.
+
+11. Choose Create role.
+
+## Create and attach an IAM policy to the API Gateway role 1. Open the IAM console.
+
+2. In the navigation pane, choose Roles.
+
+3. In the search box, enter the name of the new API Gateway role that you created. Then, choose that role from the Role name column.
+
+4. On the Roles detail page tab, choose Add permissions.
+
+5. Choose Create inline policy.
+
+6. On the Visual editor tab, in the Select a service section, choose Choose a service.
+
+7. Enter S3, and then choose S3.
+
+8. In the Specify the actions allowed in S3 box, enter PutObject, and then choose PutObject.
+
+9. Enter GetObject, and then choose GetObject.
+
+10. Expand Resources, and then choose Specific.
+
+11. Choose Add ARN.
+
+12. For Bucket name, enter the name of your bucket. Include the prefix, if applicable.
+
+13. For Object name, enter an object name.
+
+14. Choose Add.
+
+15. (Optional) Choose Next: Tags to add tags.
+
+16. Choose Next: Review.
+
+17. For Name, enter the name of your policy.
+
+18. Choose Create policy.
+
+19. In the policy search box, enter the name of the policy that you created in step 17, and then select that policy.
+
+20. Choose Policy actions, and then choose Attach. A list of IAM roles appears.
+
+21. Search for the API Gateway role that you created earlier. Then, select the role.
+
+22. Choose Attach policy.
+
+## Create an API Gateway REST API
+
+## Create an API to serve your requests 1. Open the API Gateway console.
+
+2. In the navigation pane, choose APIs.
+
+3. Choose Create API.
+
+4. In the Choose an API type section, for REST API, choose Build.
+
+5. For API Name, enter a name for your API, and then choose Next.
+
+6. Choose Create API.
+
+## Create resources for your API
+
+1. In the Resources panel of your API page, select /.
+
+2. For Actions, choose Create Resource.
+
+3. For Resource Name, enter folder.
+
+4. For Resource Path, enter {folder}.
+
+5. Choose Create Resource.
+
+6. In the Resources panel, select the /{folder} resource that you created in step 5.
+
+7. Choose Actions, and then choose Create Resource.
+
+8. For Resource Name, enter object.
+
+9. For Resource Path, enter {object}.
+
+10. Choose Create Resource.
+
+## Create a PUT method for your API for uploading image or PDF
+
+1. Choose Actions, and then choose Create Method.
+
+2. From the dropdown list, choose PUT, and then choose the check mark icon.
+
+3. Under the Integration type category, choose AWS Service.
+
+4. For AWS Region, choose us-east-1 or the AWS Region you see on the Bucket properties page.
+
+5. For AWS Service, choose Simple Storage Service (S3).
+
+6. Keep AWS Subdomain empty.
+
+7. For HTTP method, choose PUT.
+
+8. For Action Type, choose Use path override.
+
+9. For Path override (optional), enter {bucket}/{key}.
+
+10. For Execution role, enter the ARN for the IAM role that you created earlier. Creation of ARN is part of the Create and attach an IAM policy to the API Gateway role section.
+
+11. For Content Handling, choose Passthrough.
+
+12. Choose Save.
+
+## Configure parameter mappings for the PUT method
+
+1. In the Resources panel of your API page, choose PUT.
+
+2. Choose Integration Request.
+
+3. Expand URL Path Parameters.
+
+4. Choose Add path.
+
+5. For Name, enter bucket.
+
+6. For Mapped from, enter method.request.path.folder.
+
+7. Choose the check mark icon at the end of the row.
+
+8. Repeat steps 4–7. In step 5, set Name to key. In step 6, set Mapped from to method.request.path.object.
+
+## Create a GET method for your API for retrieving an image
+
+1. In the Resources panel of your API page, choose /{object}.
+
+2. Choose Actions, and then choose Create Method.
+
+3. From the dropdown list, choose GET, and then choose the check mark icon.
+
+4. Under the Integration type category, choose AWS Service.
+
+5. For AWS Region, choose us-east-1, or the Region that you see on the Bucket properties page.
+
+6. For AWS Service, choose Simple Storage Service (S3).
+
+7. Keep AWS Subdomain empty.
+
+8. For HTTP method, choose GET.
+
+9. For Action Type, choose Use path override.
+
+10. For Path override (optional), enter {bucket}/{key}.
+
+11. For Execution role, enter the ARN for the IAM role that you created earlier. ARN creation is part of the Create and attach an IAM policy to the API Gateway role section.
+
+12. For Content Handling, choose Passthrough.
+
+13. Choose Save.
+
+## Configure parameter mappings for the GET method
+
+1. In the Resources panel of your API page, choose GET.
+
+2. Choose Integration Request.
+
+3. Expand URL Path Parameters.
+
+4. Choose Add path.
+
+5. For Name, enter bucket.
+
+6. For Mapped from, enter method.request.path.folder.
+
+7. Choose the check mark icon at the end of the row.
+
+8. Repeat steps 4–7. In step 5, set Name to key. In step 6, set Mapped from to method.request.path.object.
+
+## Set up binary media types for the API
+
+1. In the navigation pane of your API page, choose Settings.
+
+2. In the Binary Media Types section, choose Add Binary Media Type.
+
+3. In the text box, add the following string: */*
+
+## Deploy your API
+
+1. In the navigation pane on your API page, choose Resources.
+
+2. In the Resources pane, choose Actions, and then choose Deploy API.
+
+3. In the Deploy API window, for Deployment stage, choose [New Stage].
+
+4. For Stage name, enter v1.
+
+5. Choose Deploy.
+
+6. In the navigation pane, choose Stages. 7. Choose the v1 stage. The invoke URL for making requests to the deployed API snapshot appears.
+
+8. Copy the invoke URL.
+
+Example curl command to make a PUT HTTP request to upload an
+
+In the following example, abc12345 is your API ID, testfolder is your S3 bucket, and testimage.jpeg is the local file that you upload: curl -i --location --request PUT 'https://abc12345.execute-api.us-west-2.amazonaws.com/v1/testfolder/testimage.jpeg' --header 'Content-Type: text/plain' --data-binary '@/Path/to/file/image.jpeg
