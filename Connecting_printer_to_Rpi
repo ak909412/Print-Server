@@ -1,0 +1,21 @@
+## Connecting the Printer to Raspberry pi using CUPS
+
+Step 1: Set Up the Raspberry Pi
+
+1. Download the Raspberry Pi OS image from the official website.
+
+2. Use software like Raspberry Pi Imager to flash the OS onto a microSD card.
+
+3. Insert the microSD card into the Raspberry Pi and power it on.
+
+4. Follow the setup instructions to configure the Raspberry Pi.
+
+Step 2: Install Printer Software
+
+sudo apt update sudo apt install cups sudo usermod -aG lpadmin <Username>
+
+Step 3: Configure CUPS 1. Open the CUPS interface by navigating to http://localhost:631 on your Raspberry Pi.
+
+2. Connect Your Printer via USB to Rpi.
+
+3. Add your printer through the CUPS interface.
