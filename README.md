@@ -43,13 +43,13 @@ pip install boto3 schedule
 Create a Python script to monitor the S3 bucket, download files, and send print commands.
 
 ### 3. Setting up Windows Machine
-#### Install Required Libraries:
+**Install Required Libraries:**
 
 pip install boto3 pywin32 AWSIoTPythonSDK schedule
-#### Configure AWS CLI:
+**Configure AWS CLI:**
 
 aws configure
-## Python Script for Monitoring S3 Bucket:
+ **Python Script for Monitoring S3 Bucket:**
 Like the Raspberry Pi setup, create a Python script for handling print jobs.
 ### 4. Running the System
 Start the Python Script: On either the Raspberry Pi or Windows machine to begin monitoring the S3 bucket.
