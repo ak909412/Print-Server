@@ -1,0 +1,57 @@
+Setting Rpi to do print jobs and provide feedback using python
+
+Install Required Software
+
+sudo apt-get install python3 python3-pip
+
+AWS IoT SDK for Python:
+
+pip3 install AWSIoTPythonSDK
+
+Install CUPS to manage printers:
+
+sudo apt-get install cups
+
+sudo usermod -aG lpadmin pi # Add the default 'pi' user to the lpadmin group
+
+Install Boto3 to interact with AWS services:
+
+pip3 install boto3
+
+AWS Credentials and IoT Configuration
+
+AWS CLI:
+
+pip3 install awscli
+
+aws configure
+
+Follow the prompts to enter your AWS Access Key, Secret Key, and default region.
+
+Ensure the local directory for downloading files from S3 exists:
+
+mkdir -p /home/veris/Desktop/Printer/temp
+
+Write the python script which will do the following jobs:
+
+· Download file from S3 and store it locally
+
+· Print the downloaded file
+
+· Delete the file from local storage and S3
+
+· Post the list of active printers to AWS IoT core
+
+· Post PrintJob log to AWS IoT Core
+
+Put the code to run on boot:
+
+Crontab –e
+
+@reboot (sleep 15; /usr/bin/python3 /home/veris/desktop/Printer/final/final.py)
+
+“Ctrl + O”
+
+“Press Enter”
+
+“Ctrl + x”
