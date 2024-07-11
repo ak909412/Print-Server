@@ -1,0 +1,53 @@
+Configure AWS IoT core for feedback and print job logs:
+
+1. Create Things
+
+o Navigate to AWS IoT > Manage > Things
+
+o Click on create things
+
+o Create single thing
+
+o Enter thing name > click next
+
+2. Creating Device Certificate
+
+o Click “Auto generate new Certificate” > next
+
+o Click on create Policy
+
+3. Creating Policy and Recourses
+
+o Enter policy name
+
+Policy effect Policy action Policy resource
+
+Allow Publish *
+
+Allow Subscribe *
+
+Allow connect *
+
+Allow Get *
+
+o Create
+
+o Get back to the original tab (where we were creating the thing)
+
+o Select the created policy
+
+o Click “Create thing”
+
+4. Downloading MQTT Policy
+
+o Download the certificates
+
+· Device Certificate
+
+· Public Key
+
+· Private Key
+
+· Root CA1 certificate
+
+· Root CA2 certificate
